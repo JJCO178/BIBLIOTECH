@@ -1,0 +1,327 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiblioTech - Dashboard Docente</title>
+    <link rel="stylesheet" href="{% static 'css/home_docentes.css' %}">
+</head>
+<body>
+    <!-- Fondo con partículas flotantes -->
+    <div class="particles"></div>
+    
+    <!-- Formas geométricas de fondo -->
+    <div class="geo-shape geo-shape-1"></div>
+    <div class="geo-shape geo-shape-2"></div>
+    <div class="geo-shape geo-shape-3"></div>
+
+    <!-- Encabezado -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo" onclick="showHome()">BiblioTech</div>
+            <nav class="nav-menu" id="navMenu">
+                <a href="#" class="nav-btn active" onclick="showHome()">Inicio</a>
+                <a href="#" class="nav-btn" onclick="showProfile()">Perfil</a>
+                <a href="#" class="nav-btn" onclick="showBooks()">Biblioteca</a>
+                <a href="#" class="nav-btn" onclick="showAddBooks()">Agregar Libros</a>
+                <a href="#" class="nav-btn" onclick="showStudents()">Estudiantes</a>
+                <a href="#" class="nav-btn" onclick="showComments()">Comentarios</a>
+            </nav>
+            <div class="user-info">
+                <span class="user-type">Docente</span>
+                <a href="{% url "logout" %}" class="nav-btn logout-btn" onclick="logout()">Cerrar Sesión</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <!-- Sección de bienvenida -->
+        <section class="welcome-section" id="homeSection">
+            <h1 class="welcome-title">¡Bienvenido Docente!</h1>
+            <p class="welcome-message">Hola Docente, gestiona tu biblioteca y recursos educativos</p>
+            
+            <div class="dashboard-grid" id="dashboardGrid">
+                <div class="dashboard-card">
+                    <div class="card-icon">📚</div>
+                    <h3 class="card-title">Gestionar Biblioteca</h3>
+                    <p class="card-description">Administra la colección de libros y recursos educativos.</p>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-icon">➕</div>
+                    <h3 class="card-title">Agregar Contenido</h3>
+                    <p class="card-description">Sube nuevos libros y materiales para tus estudiantes.</p>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-icon">👥</div>
+                    <h3 class="card-title">Mis Estudiantes</h3>
+                    <p class="card-description">Monitorea el progreso de lectura de tus estudiantes.</p>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-icon">📈</div>
+                    <h3 class="card-title">Reportes</h3>
+                    <p class="card-description">Genera reportes detallados sobre el uso de la biblioteca.</p>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-icon">💬</div>
+                    <h3 class="card-title">Foro Educativo</h3>
+                    <p class="card-description">Modera discusiones y fomenta el debate académico.</p>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-icon">🎯</div>
+                    <h3 class="card-title">Recomendaciones</h3>
+                    <p class="card-description">Crea listas de lectura personalizadas para tus clases.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Perfil -->
+        <section class="hidden" id="profileSection">
+            <div class="welcome-section">
+                <h1 class="welcome-title">Mi Perfil Docente</h1>
+                <p class="welcome-message">Gestiona tu información profesional y preferencias</p>
+                <div class="dashboard-card" style="max-width: 600px; margin: 0 auto;"  onclick="showTeacherPopover()">
+                    <div class="card-icon">👨‍🏫</div>
+                    <h3 class="card-title">Información Profesional</h3>
+                    <p class="card-description">Actualiza tu información de perfil, especialidades académicas, materias que impartes y configuraciones de la plataforma educativa.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Biblioteca -->
+        <section class="hidden" id="booksSection">
+            <div class="welcome-section">
+                <h1 class="welcome-title">Gestión de Biblioteca</h1>
+                <p class="welcome-message">Administra tu colección de recursos educativos</p>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-icon">📚</div>
+                        <h3 class="card-title">Todos los Libros</h3>
+                        <p class="card-description">Visualiza y administra toda la colección de libros disponibles.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">✏️</div>
+                        <h3 class="card-title">Editar Libros</h3>
+                        <p class="card-description">Modifica información, descripción y categorías de los libros.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">🗂️</div>
+                        <h3 class="card-title">Categorías</h3>
+                        <p class="card-description">Organiza los libros por materias y niveles educativos.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">📊</div>
+                        <h3 class="card-title">Estadísticas de Uso</h3>
+                        <p class="card-description">Analiza qué libros son más populares entre tus estudiantes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Agregar Libros -->
+        <section class="hidden" id="addBooksSection">
+            <div class="welcome-section">
+                <h1 class="welcome-title">Agregar Nuevos Recursos</h1>
+                <p class="welcome-message">Añade nuevos libros y materiales educativos</p>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-icon">📖</div>
+                        <h3 class="card-title">Subir Libro</h3>
+                        <p class="card-description">Agrega un nuevo libro con toda su información y contenido.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">📄</div>
+                        <h3 class="card-title">Material Complementario</h3>
+                        <p class="card-description">Sube guías de estudio, ejercicios y recursos adicionales.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">🎨</div>
+                        <h3 class="card-title">Contenido Multimedia</h3>
+                        <p class="card-description">Incorpora videos, audios y presentaciones educativas.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">📋</div>
+                        <h3 class="card-title">Listas de Lectura</h3>
+                        <p class="card-description">Crea compilaciones temáticas para tus clases.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Estudiantes -->
+        <section class="hidden" id="studentsSection">
+            <div class="welcome-section">
+                <h1 class="welcome-title">Gestión de Estudiantes</h1>
+                <p class="welcome-message">Monitorea el progreso y actividad de tus estudiantes</p>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-icon">👥</div>
+                        <h3 class="card-title">Lista de Estudiantes</h3>
+                        <p class="card-description">Visualiza todos los estudiantes registrados en tus clases.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">📈</div>
+                        <h3 class="card-title">Progreso de Lectura</h3>
+                        <p class="card-description">Monitorea el avance de lectura de cada estudiante.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">🎯</div>
+                        <h3 class="card-title">Asignar Lecturas</h3>
+                        <p class="card-description">Asigna libros específicos a estudiantes o grupos.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">⭐</div>
+                        <h3 class="card-title">Evaluaciones</h3>
+                        <p class="card-description">Revisa reseñas y comentarios de tus estudiantes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Comentarios -->
+        <section class="hidden" id="commentsSection">
+            <div class="welcome-section">
+                <h1 class="welcome-title">Moderación y Comentarios</h1>
+                <p class="welcome-message">Gestiona la interacción y discusiones académicas</p>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-icon">💬</div>
+                        <h3 class="card-title">Moderar Comentarios</h3>
+                        <p class="card-description">Revisa y modera los comentarios de los estudiantes.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">🗨️</div>
+                        <h3 class="card-title">Foros de Discusión</h3>
+                        <p class="card-description">Gestiona los foros temáticos y debates académicos.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">📝</div>
+                        <h3 class="card-title">Feedback Estudiantil</h3>
+                        <p class="card-description">Proporciona retroalimentación a las reseñas de estudiantes.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">🏆</div>
+                        <h3 class="card-title">Destacar Contenido</h3>
+                        <p class="card-description">Resalta las mejores reseñas y comentarios educativos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <!-- Popover para Docente -->
+    <div class="popover-overlay" id="teacherPopover">
+        <div class="popover">
+            <button class="close-btn" onclick="closePopover()">&times;</button>
+            
+            <div class="popover-header">
+                <h2 class="popover-title">👨‍🏫 Perfil de Docente</h2>
+                <p class="popover-subtitle">Información personal y profesional</p>
+            </div>
+            
+            <div class="profile-info">
+                <!-- Información básica común -->
+                <div class="info-item">
+                    <span class="info-icon">👤</span>
+                    <div class="info-content">
+                        <div class="info-label">Nombre Completo</div>
+                        <div class="info-value" id="teacherName">{{ user_name|default:"Dra. Ana María González Rodríguez" }}</div>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-icon">📧</span>
+                    <div class="info-content">
+                        <div class="info-label">Correo Electrónico</div>
+                        <div class="info-value" id="teacherEmail">{{ user_email|default:"ana.gonzalez@colegio.edu.co" }}</div>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-icon">📱</span>
+                    <div class="info-content">
+                        <div class="info-label">Teléfono</div>
+                        <div class="info-value" id="teacherPhone">{{ telefono|default:"+57 301 456 7890" }}</div>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-icon">📝</span>
+                    <div class="info-content">
+                        <div class="info-label">Biografía</div>
+                        <div class="info-value" id="teacherBio">{{ biografia|default:"Docente con experiencia en educación. Especialista en mi área. Apasionado por el uso de tecnología en el aula." }}</div>
+                    </div>
+                </div>
+                
+                <!-- Información específica de docente -->
+                <div class="teacher-specific">
+                    <div class="section-title">
+                        <span>👨‍🏫</span>
+                        Información Profesional
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-icon">🆔</span>
+                        <div class="info-content">
+                            <div class="info-label">DNI</div>
+                            <div class="info-value" id="teacherDNI">{{ dni|default:"98765432" }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-icon">📅</span>
+                        <div class="info-content">
+                            <div class="info-label">Fecha de Contratación</div>
+                            <div class="info-value" id="contractDate">{{ fecha_contratacion|default:"15 de Febrero, 2010" }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-icon">🔢</span>
+                        <div class="info-content">
+                            <div class="info-label">Código Modular</div>
+                            <div class="info-value" id="modularCode">{{ codigo_modular|default:"MOD-12345" }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-icon">🏫</span>
+                        <div class="info-content">
+                            <div class="info-label">Código Colegio Profesores</div>
+                            <div class="info-value" id="collegeCode">{{ codigo_colegio_profesores|default:"CCP-67890" }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-icon">📚</span>
+                        <div class="info-content">
+                            <div class="info-label">Cursos Dictados</div>
+                            <div class="info-value" id="coursesTaught">{{ cursos_dictados|default:"Matemáticas Avanzadas, Álgebra, Geometría" }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-icon">🚨</span>
+                        <div class="info-content">
+                            <div class="info-label">Teléfono de Emergencia</div>
+                            <div class="info-value" id="emergencyPhone">{{ telefono_emergencias|default:"+57 300 111 2233" }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-icon">📋</span>
+                        <div class="info-content">
+                            <div class="info-label">Tipo de Contrato</div>
+                            <div class="info-value" id="contractType">{{ tipo_contrato|default:"Tiempo Completo" }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/home_docentes.js' %}"></script>
+</body>
+</html>

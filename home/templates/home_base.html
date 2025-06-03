@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiblioTech - Biblioteca Digital del Futuro</title>
+    <link rel="stylesheet" href="{% static 'css/home_base.css' %}">
+</head>
+<body>
+    <!-- Partículas flotantes -->
+    <div class="particles"></div>
+    
+    <!-- Formas geométricas de fondo -->
+    <div class="geometric-bg">
+        <div class="geo-shape"></div>
+        <div class="geo-shape"></div>
+        <div class="geo-shape"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">📚 BiblioTech</div>
+       <a href="{% url 'login' %}" class="login-btn">Iniciar Sesión</a>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <section class="hero-section">
+            <h1 class="hero-title">BiblioTech</h1>
+            <p class="hero-subtitle">La biblioteca digital del futuro está aquí</p>
+            
+            <div class="features-grid">
+                <div class="feature-card" style="--delay: 0.2s">
+                    <div class="feature-icon">🔍</div>
+                    <h3 class="feature-title">Gran Variedad</h3>
+                    <p class="feature-description">Encuentra un gran variedad de libros para tener todos los conocimientos que requieras.</p>
+                </div>
+                
+                <div class="feature-card" style="--delay: 0.4s">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">Acceso Multiplataforma</h3>
+                    <p class="feature-description">Lee en cualquier dispositivo. Sincronización automática entre móvil, tablet y ordenador.</p>
+                </div>
+                
+                <div class="feature-card" style="--delay: 0.6s">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">Explora la lectura</h3>
+                    <p class="feature-description">Descubre tu próxima lectura favorita mediante BiblioTech y explora el maravilloso mundo de la lectura.</p>
+                </div>
+                
+                <div class="feature-card" style="--delay: 0.8s">
+                    <div class="feature-icon">☁️</div>
+                    <h3 class="feature-title">Almacenamiento en la Nube</h3>
+                    <p class="feature-description">Tus datos e información privada estan seguros con nosotros y tendras siempre acceso a ellos.</p>
+                </div>
+            </div>
+            
+            <a href="{% url 'home_explorer' %}" class="cta-button" onclick="handleExplore()">Explorar Biblioteca</a>
+        </section>
+    </main>
+
+    <script src="{% static 'js/home_base.js' %}"></script>
+</body>
+</html>

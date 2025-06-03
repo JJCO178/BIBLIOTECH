@@ -1,0 +1,278 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiblioTech - Dashboard Estudiante</title>
+    <link rel="stylesheet" href="{% static 'css/home_alumnos.css' %}">
+</head>
+<body>
+    <!-- Fondo con partículas flotantes -->
+    <div class="particles"></div>
+    
+    <!-- Formas geométricas de fondo -->
+    <div class="geo-shape geo-shape-1"></div>
+    <div class="geo-shape geo-shape-2"></div>
+    <div class="geo-shape geo-shape-3"></div>
+
+    <!-- Encabezado -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo" onclick="showHome()">BiblioTech</div>
+            <nav class="nav-menu" id="navMenu">
+                <a href="#" class="nav-btn active" onclick="showHome()">Inicio</a>
+                <a href="#" class="nav-btn" onclick="showProfile()">Perfil</a>
+                <a href="#" class="nav-btn" onclick="showBooks()">Libros</a>
+                <a href="#" class="nav-btn" onclick="showComments()">Comentarios</a>
+            </nav>
+            <div class="user-info">
+                <span class="user-type">Estudiante</span>
+                <a href="{% url "logout" %}" class="nav-btn logout-btn" onclick="logout()">Cerrar Sesión</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <!-- Sección de bienvenida -->
+        <section class="welcome-section" id="homeSection">
+            <h1 class="welcome-title">¡Bienvenido a BiblioTech!</h1>
+            <p class="welcome-message">Hola Estudiante, explora tu biblioteca digital personalizada</p>
+            
+            <div class="dashboard-grid" id="dashboardGrid">
+                <div class="dashboard-card">
+                    <div class="card-icon">📖</div>
+                    <h3 class="card-title">Mis Lecturas</h3>
+                    <p class="card-description">Continúa leyendo tus libros favoritos y descubre tu progreso de lectura.</p>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-icon">🔍</div>
+                    <h3 class="card-title">Explorar Libros</h3>
+                    <p class="card-description">Descubre nuevos títulos y géneros que se adapten a tus intereses.</p>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-icon">⭐</div>
+                    <h3 class="card-title">Mis Reseñas</h3>
+                    <p class="card-description">Comparte tus opiniones sobre los libros que has leído.</p>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-icon">📊</div>
+                    <h3 class="card-title">Estadísticas</h3>
+                    <p class="card-description">Revisa tu progreso de lectura y logros obtenidos.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Perfil -->
+        <section class="hidden" id="profileSection">
+            <div class="welcome-section">
+                <h1 class="welcome-title">Mi Perfil</h1>
+                <p class="welcome-message">Gestiona tu información personal y preferencias</p>
+                 <div class="dashboard-card clickable" style="max-width: 600px; margin: 0 auto;" onclick="showStudentPopover()">
+                    <div class="card-icon">👤</div>
+                    <h3 class="card-title">Información Personal</h3>
+                    <p class="card-description">Aquí puedes actualizar tu información de perfil, cambiar tu contraseña y configurar tus preferencias de lectura.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Libros -->
+        <section class="hidden" id="booksSection">
+            <div class="welcome-section">
+                <h1 class="welcome-title">Mi Biblioteca</h1>
+                <p class="welcome-message">Explora tu colección de libros</p>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-icon">📚</div>
+                        <h3 class="card-title">Mis Libros</h3>
+                        <p class="card-description">Accede a todos los libros que tienes disponibles para leer.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">🔍</div>
+                        <h3 class="card-title">Buscar Libros</h3>
+                        <p class="card-description">Encuentra nuevos libros por título, autor o categoría.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">📖</div>
+                        <h3 class="card-title">Continuar Leyendo</h3>
+                        <p class="card-description">Retoma la lectura desde donde la dejaste.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">❤️</div>
+                        <h3 class="card-title">Favoritos</h3>
+                        <p class="card-description">Accede rápidamente a tus libros favoritos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Comentarios -->
+        <section class="hidden" id="commentsSection">
+            <div class="welcome-section">
+                <h1 class="welcome-title">Comentarios y Reseñas</h1>
+                <p class="welcome-message">Participa en discusiones y comparte opiniones</p>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-icon">💬</div>
+                        <h3 class="card-title">Mis Comentarios</h3>
+                        <p class="card-description">Revisa todos los comentarios que has hecho sobre los libros.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">⭐</div>
+                        <h3 class="card-title">Mis Reseñas</h3>
+                        <p class="card-description">Lee y escribe reseñas de los libros que has leído.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">🗨️</div>
+                        <h3 class="card-title">Discusiones</h3>
+                        <p class="card-description">Participa en foros de discusión sobre tus libros favoritos.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">📝</div>
+                        <h3 class="card-title">Escribir Reseña</h3>
+                        <p class="card-description">Comparte tu opinión sobre un libro que acabas de leer.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Popover para Estudiante -->
+    <div class="popover-overlay" id="studentPopover">
+        <div class="popover">
+            <button class="close-btn" onclick="closePopover()">&times;</button>
+            
+            <div class="popover-header">
+                <h2 class="popover-title">👨‍🎓 Perfil de Estudiante</h2>
+                <p class="popover-subtitle">Información personal y académica</p>
+            </div>
+            
+            <div class="profile-info">
+                <!-- Información básica común -->
+                <div class="info-item">
+                    <span class="info-icon">👤</span>
+                    <div class="info-content">
+                        <div class="info-label">Nombre Completo</div>
+                        <div class="info-value" id="studentName">{{ user_name|default:"Juan Carlos Pérez García" }}</div>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-icon">📧</span>
+                    <div class="info-content">
+                        <div class="info-label">Correo Electrónico</div>
+                        <div class="info-value" id="studentEmail">{{ user_email|default:"juan.perez@estudiante.com" }}</div>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-icon">📱</span>
+                    <div class="info-content">
+                        <div class="info-label">Teléfono</div>
+                        <div class="info-value" id="studentPhone">{{ telefono|default:"+57 300 123 4567" }}</div>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-icon">📝</span>
+                    <div class="info-content">
+                        <div class="info-label">Biografía</div>
+                        <div class="info-value" id="studentBio">{{ biografia|default:"Estudiante apasionado por la lectura y el aprendizaje continuo. Me interesan especialmente los libros de ciencia ficción y tecnología." }}</div>
+                    </div>
+                </div>
+                
+                <!-- Información específica de estudiante -->
+                <div class="student-specific">
+                    <div class="section-title">
+                        <span>🎓</span>
+                        Información Académica
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-icon">🏫</span>
+                        <div class="info-content">
+                            <div class="info-label">Nivel Escolar</div>
+                            <div class="info-value" id="studentLevel">{{ nivel_escolar|default:"Universitario" }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-icon">🆔</span>
+                        <div class="info-content">
+                            <div class="info-label">DNI</div>
+                            <div class="info-value" id="studentDNI">{{ dni|default:"12345678" }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-icon">🩺</span>
+                        <div class="info-content">
+                            <div class="info-label">Enfermedades</div>
+                            <div class="info-value" id="studentDiseases">{{ enfermedades|default:"Ninguna registrada" }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-icon">🤧</span>
+                        <div class="info-content">
+                            <div class="info-label">Alergias</div>
+                            <div class="info-value" id="studentAllergies">{{ alergias|default:"Ninguna registrada" }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-icon">🩸</span>
+                        <div class="info-content">
+                            <div class="info-label">Tipo de Sangre</div>
+                            <div class="info-value" id="studentBloodType">{{ tipo_sangre|default:"O+" }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-icon">👨‍⚖️</span>
+                        <div class="info-content">
+                            <div class="info-label">Tutor Legal</div>
+                            <div class="info-value" id="studentTutor">{{ tutor_legal|default:"María García López" }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-icon">🚨</span>
+                        <div class="info-content">
+                            <div class="info-label">Teléfono de Emergencia</div>
+                            <div class="info-value" id="emergencyPhone">{{ telefono_emergencias|default:"+57 301 987 6543" }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-icon">⚕️</span>
+                        <div class="info-content">
+                            <div class="info-label">Médico de Cabecera</div>
+                            <div class="info-value" id="studentDoctor">{{ medico_cabecera|default:"Dr. Pedro Martínez" }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-icon">🏥</span>
+                        <div class="info-content">
+                            <div class="info-label">Centro Médico</div>
+                            <div class="info-value" id="medicalCenter">{{ centro_medico|default:"Hospital San Juan" }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-icon">👥</span>
+                        <div class="info-content">
+                            <div class="info-label">Número de Hermanos</div>
+                            <div class="info-value" id="studentSiblings">{{ numero_hermanos|default:"2" }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/home_alumnos.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiblioTech - Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/home_login.css' %}">
+</head>
+<body>
+    <!-- Fondo con partículas flotantes -->
+    <div class="particles"></div>
+    
+    <!-- Formas geométricas de fondo -->
+    <div class="geo-shape geo-shape-1"></div>
+    <div class="geo-shape geo-shape-2"></div>
+    <div class="geo-shape geo-shape-3"></div>
+
+    <!-- Encabezado -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo" onclick="showHome()">BiblioTech</div>
+            <nav class="nav-menu" id="navMenu">
+                <a href="#" class="nav-btn active" onclick="showHome()">Inicio</a>
+                <a href="#" class="nav-btn" onclick="showProfile()">Perfil</a>
+                <a href="#" class="nav-btn" onclick="showBooks()">Libros</a>
+                <a href="#" class="nav-btn hidden" id="addBooksBtn" onclick="showAddBooks()">Agregar Libros</a>
+                <a href="#" class="nav-btn" onclick="showComments()">Comentarios</a>
+            </nav>
+            <div class="user-info">
+                <span class="user-type" id="userTypeDisplay">Estudiante</span>
+                <a href="#" class="nav-btn logout-btn" onclick="logout()">Cerrar Sesión</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <!-- Sección de bienvenida -->
+        <section class="welcome-section" id="homeSection">
+            <h1 class="welcome-title">¡Bienvenido a BiblioTech!</h1>
+            <p class="welcome-message" id="welcomeMessage">Hola Estudiante, explora tu biblioteca digital personalizada</p>
+            
+            <div class="dashboard-grid" id="dashboardGrid">
+                <!-- Tarjetas que se generarán dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Secciones ocultas para cada página -->
+        <section class="hidden" id="profileSection">
+            <div class="welcome-section">
+                <h1 class="welcome-title">Mi Perfil</h1>
+                <p class="welcome-message">Gestiona tu información personal y preferencias</p>
+                <div class="dashboard-card" style="max-width: 600px; margin: 0 auto;">
+                    <div class="card-icon">👤</div>
+                    <h3 class="card-title">Información Personal</h3>
+                    <p class="card-description">Aquí puedes actualizar tu información de perfil, cambiar tu contraseña y configurar tus preferencias de lectura.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="hidden" id="booksSection">
+            <div class="welcome-section">
+                <h1 class="welcome-title">Biblioteca</h1>
+                <p class="welcome-message">Explora y gestiona tu colección de libros</p>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-icon">📚</div>
+                        <h3 class="card-title">Mis Libros</h3>
+                        <p class="card-description">Accede a todos los libros que tienes disponibles para leer.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">🔍</div>
+                        <h3 class="card-title">Buscar Libros</h3>
+                        <p class="card-description">Encuentra nuevos libros por título, autor o categoría.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="hidden" id="addBooksSection">
+            <div class="welcome-section">
+                <h1 class="welcome-title">Agregar Libros</h1>
+                <p class="welcome-message">Añade nuevos libros a la biblioteca</p>
+                <div class="dashboard-card" style="max-width: 600px; margin: 0 auto;">
+                    <div class="card-icon">➕</div>
+                    <h3 class="card-title">Subir Nuevo Libro</h3>
+                    <p class="card-description">Como docente, puedes agregar nuevos libros y recursos educativos a la biblioteca para que estén disponibles para todos los estudiantes.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="hidden" id="commentsSection">
+            <div class="welcome-section">
+                <h1 class="welcome-title">Comentarios</h1>
+                <p class="welcome-message">Participa en discusiones y comparte opiniones</p>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-icon">💬</div>
+                        <h3 class="card-title">Mis Comentarios</h3>
+                        <p class="card-description">Revisa todos los comentarios que has hecho sobre los libros.</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">⭐</div>
+                        <h3 class="card-title">Reseñas</h3>
+                        <p class="card-description">Lee y escribe reseñas de los libros que has leído.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Simulador de roles (solo para demostración) -->
+    <div class="role-selector">
+        <h4>Cambiar Rol (Demo)</h4>
+        <button onclick="changeRole('estudiante')">Estudiante</button>
+        <button onclick="changeRole('docente')">Docente</button>
+    </div>
+
+    <script src="{% static 'js/home-login.js' %}"></script>
+</body>
+</html>

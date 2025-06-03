@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beneficios - BiblioTech</title>
+    <link rel="stylesheet" href="{% static 'css/home_explorer.css' %}">
+</head>
+<body>
+    <!-- Fondo con partículas flotantes -->
+    <div class="particles"></div>
+    
+    <!-- Formas geométricas de fondo -->
+    <div class="geo-shape geo-shape-1"></div>
+    <div class="geo-shape geo-shape-2"></div>
+    <div class="geo-shape geo-shape-3"></div>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">BiblioTech</div>
+            <nav class="nav-menu">
+                <a href="{% url 'home' %}" class="nav-btn">Inicio</a>
+                <a href="{% url "login" %}" class="nav-btn login-btn">Iniciar Sesión</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <section class="benefits-section">
+            <div class="benefits-container">
+                <h1 class="benefits-title">¿Por qué elegir BiblioTech?</h1>
+                <p class="benefits-subtitle">Descubre todas las ventajas de nuestra biblioteca digital</p>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-item" style="--delay: 0.1s">
+                        <div class="benefit-icon">🌟</div>
+                        <h3 class="benefit-title">Acceso Ilimitado</h3>
+                        <p class="benefit-description">Miles de libros, revistas y artículos académicos disponibles 24/7 desde cualquier dispositivo.</p>
+                    </div>
+                    
+                    <div class="benefit-item" style="--delay: 0.2s">
+                        <div class="benefit-icon">⚡</div>
+                        <h3 class="benefit-title">Búsqueda Instantánea</h3>
+                        <p class="benefit-description">Encuentra cualquier libro en segundos con nuestra inteligencia artificial avanzada.</p>
+                    </div>
+                    
+                    <div class="benefit-item" style="--delay: 0.3s">
+                        <div class="benefit-icon">📊</div>
+                        <h3 class="benefit-title">Progreso Personalizado</h3>
+                        <p class="benefit-description">Sigue tu progreso de lectura, toma notas y crea listas personalizadas.</p>
+                    </div>
+                    
+                    <div class="benefit-item" style="--delay: 0.4s">
+                        <div class="benefit-icon">🔒</div>
+                        <h3 class="benefit-title">Datos Seguros</h3>
+                        <p class="benefit-description">Tu información y progreso están protegidos con encriptación de última generación.</p>
+                    </div>
+                    
+                    <div class="benefit-item" style="--delay: 0.5s">
+                        <div class="benefit-icon">🎯</div>
+                        <h3 class="benefit-title">Recomendaciones Smart</h3>
+                        <p class="benefit-description">Recibe sugerencias precisas basadas en tus gustos y historial de lectura.</p>
+                    </div>
+                    
+                    <div class="benefit-item" style="--delay: 0.6s">
+                        <div class="benefit-icon">🌍</div>
+                        <h3 class="benefit-title">Biblioteca Global</h3>
+                        <p class="benefit-description">Accede a contenido de bibliotecas y editoriales de todo el mundo.</p>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </section>
+    </main>
+
+    <script src="{% static 'js/home_explorer.js' %}"></script>
+</body>
+</html>
+
