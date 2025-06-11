@@ -1,8 +1,11 @@
+
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
+from .models import Alumno, Docente, PerfilUsuario, NivelEscolar
+from django.db import connections
 
 # Create your views here.
 
@@ -17,7 +20,7 @@ def login_view(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         
-        try:
+        try:    
             # Buscar usuario por email
             user = User.objects.get(email=email, is_active=True)
             
@@ -74,6 +77,76 @@ def redirect_user_by_role(user):
         print("→ Caso no contemplado, redirigiendo a home_login")
         return redirect('home_login')
 
+def get_user_extended_data(user):
+    """Función para obtener datos extendidos del usuario desde bd_externa y perfil"""
+    extended_data = {}
+    
+    try:
+        # Obtener datos del perfil básico (BD default)
+        perfil = None
+        try:
+            perfil = PerfilUsuario.objects.get(user=user)
+            extended_data.update({
+                'telefono': perfil.telefono,
+                'direccion': perfil.direccion,
+                'biografia': perfil.biografia,
+            })
+            
+            # Obtener nombre del nivel escolar si existe
+            if perfil.nivel_escolar:
+                extended_data['nivel_escolar'] = perfil.nivel_escolar.nombre
+                
+        except PerfilUsuario.DoesNotExist:
+            print(f"No se encontró perfil para el usuario {user.id}")
+        
+        # Obtener datos específicos según el tipo de usuario
+        if user.is_staff and not user.is_superuser:
+            # Es docente - obtener datos desde bd_externa
+            try:
+                docente = Docente.objects.using('bd_externa').get(user_id=user.id)
+                extended_data.update({
+                    'dni': docente.dni,
+                    'fecha_contratacion': docente.fecha_contratacion.strftime('%d de %B, %Y') if docente.fecha_contratacion else None,
+                    'codigo_modular': docente.codigo_modular,
+                    'codigo_colegio_profesores': docente.codigo_colegio_profesores,
+                    'cursos_dictados': docente.cursos_dictados,
+                    'telefono_emergencias': docente.telefono_emergencias,
+                    'tipo_contrato': docente.get_tipo_contrato_display(),
+                })
+            except Docente.DoesNotExist:
+                print(f"No se encontraron datos de docente para el usuario {user.id}")
+                
+        elif not user.is_staff and not user.is_superuser:
+            # Es alumno - obtener datos desde bd_externa
+            try:
+                alumno = Alumno.objects.using('bd_externa').get(user_id=user.id)
+                extended_data.update({
+                    'dni': alumno.dni,
+                    'enfermedades': alumno.enfermedades,
+                    'alergias': alumno.alergias,
+                    'tipo_sangre': alumno.tipo_sangre,
+                    'tutor_legal': alumno.tutor_legal,
+                    'telefono_emergencias': alumno.telefono_emergencias,
+                    'medico_cabecera': alumno.medico_cabecera,
+                    'centro_medico': alumno.centro_medico,
+                    'numero_hermanos': alumno.numero_hermanos,
+                })
+                
+                # Obtener nivel escolar del alumno
+                try:
+                    nivel_escolar = NivelEscolar.objects.get(pk=alumno.nivel_escolar_id)
+                    extended_data['nivel_escolar'] = nivel_escolar.nombre
+                except NivelEscolar.DoesNotExist:
+                    print(f"No se encontró nivel escolar con ID {alumno.nivel_escolar_id}")
+                    
+            except Alumno.DoesNotExist:
+                print(f"No se encontraron datos de alumno para el usuario {user.id}")
+                
+    except Exception as e:
+        print(f"Error al obtener datos extendidos: {str(e)}")
+        
+    return extended_data
+
 def home_login(request):
     """Vista para administradores/superusuarios"""
     # Verificar si el usuario está autenticado
@@ -106,11 +179,17 @@ def home_docentes(request):
         messages.error(request, 'No tienes permisos de docente')
         return redirect_user_by_role(request.user)
     
+    # Obtener datos extendidos del docente
+    extended_data = get_user_extended_data(request.user)
+    
     context = {
         'user_name': f"{request.user.first_name} {request.user.last_name}".strip() or request.user.username,
         'user_email': request.user.email,
         'user_type': 'Docente',
+        **extended_data  # Agregar todos los datos extendidos al contexto
     }
+    
+    print("Contexto docente:", context)  # Debug
     return render(request, 'home_docentes.html', context)
 
 def home_alumnos(request):
@@ -125,11 +204,17 @@ def home_alumnos(request):
         messages.error(request, 'No tienes permisos de estudiante')
         return redirect_user_by_role(request.user)
     
+    # Obtener datos extendidos del alumno
+    extended_data = get_user_extended_data(request.user)
+    
     context = {
         'user_name': f"{request.user.first_name} {request.user.last_name}".strip() or request.user.username,
         'user_email': request.user.email,
         'user_type': 'Estudiante',
+        **extended_data  # Agregar todos los datos extendidos al contexto
     }
+    
+    print("Contexto alumno:", context)  # Debug
     return render(request, 'home_alumnos.html', context)
 
 def logout_view(request):
@@ -145,6 +230,10 @@ def debug_user_info(request):
         return redirect('login')
     
     user = request.user
+    
+    # Obtener datos extendidos
+    extended_data = get_user_extended_data(user)
+    
     debug_info = {
         'username': user.username,
         'email': user.email,
@@ -155,6 +244,7 @@ def debug_user_info(request):
         'is_active': user.is_active,
         'is_staff_value': int(user.is_staff),
         'is_superuser_value': int(user.is_superuser),
+        'extended_data': extended_data,
     }
     
     # Determinar dónde debería redirigir

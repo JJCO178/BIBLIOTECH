@@ -151,6 +151,8 @@ class Docente(models.Model):
         choices=TIPO_CONTRATO_CHOICES
     )
     
+    # SOLUCIÓN 1: Convertir en propiedad ▼
+    @property
     def user(self):
         try:
             from django.contrib.auth.models import User

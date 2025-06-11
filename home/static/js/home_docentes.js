@@ -1,3 +1,4 @@
+// home_docentes.js
 // Variables globales para docente
 let currentSection = 'home';
 let studentsData = [];

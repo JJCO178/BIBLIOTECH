@@ -1,3 +1,5 @@
+
+//js home_alumnps
 // Variables globales para estudiante
 let currentSection = 'home';
 
